@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>card page</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Data Extraction</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="navbar-brand ml-3" href="/detail">Cards</a>
+                </li>
+            </ul>
+
+            <div class="ml-auto form-inline">
+                <form method="get" action="/search" class=" my-2 my-lg-0 mx-2">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search" id="search"
+                        aria-label="Search">
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div>
+        <h4 class="text-center alert alert-info mt-3">card</h4>
+    </div>
+    <div>
+    <table class="table table-hover">
+        <thead class="thead-light">
+            <tr>
+                <!-- <th scope="col">#</th> -->
+                <th scope="col">Name</th>
+                <th scope="col">Company Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Contact No</th>
+                <th scope="col">Website</th>
+                <th scope="col">Address</th>
+                <th scope="col">Action</th>
+                <th scope="col">Image</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for card in posts %}
+
+            <tr>
+                <!-- <th scope="row">1</th> -->
+                <td>{{card.name}}</td>
+                <td>{{card.company_name}}</td>
+                <td>{{card.email}}</td>
+                <td>{{card.contact1}}</td>
+                <td>{{card.website}}</td>
+                <td>{{card.address}}</td>
+                <td><a href="{% url 'editdata' card.id %}" class="btn btn-outline-primary">Edit</a></td>
+                <td><a href="/media/{{card.filename}}" class="btn btn-outline-primary">Image</a></td>
+
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <div>
+    {% if posts.has_other_pages %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if posts.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{post.previous_page_number}}">&laquo;</a></li>
+            {% else %}
+                <li class="disabled page-link"><span><<</span></li>
+            {% endif %}
+            {% for i in posts.paginator.page_range%}
+                {% if posts.number == i %}
+                    <li class="active page-link"><span>{{i}}<span class="sr-only">(current)</span></span></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if posts.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{posts.next_page_number }}">>></a></li>
+            {% else %}
+                <li class="disabled page-link"><span>>></span></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif%}
+    </div>    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
